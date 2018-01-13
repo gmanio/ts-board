@@ -1,7 +1,4 @@
 import { Component, ViewEncapsulation } from '@angular/core';
-import 'rxjs/add/operator/filter';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/mergeMap';
 
 @Component({
   selector: 'root',

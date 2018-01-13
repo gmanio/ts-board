@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import * as Quill from 'Quill';
-import { ActivatedRoute } from '@angular/router';
 import { DataService } from '../../services/data.service';
+import { ApiService } from '../../services/api.service';
 
 @Component({
   selector: 'result',
@@ -14,8 +14,8 @@ export class ResultComponent implements OnInit {
   private editor: Quill;
   public data;
 
-  constructor(private dataService: DataService) {
-
+  constructor(private dataService: DataService,
+              private api: ApiService) {
   }
 
   ngOnInit() {
@@ -29,6 +29,9 @@ export class ResultComponent implements OnInit {
 
     this.editor = new Quill('#result', options);
     this.editor.setContents(this.dataService.serviceData);
-  }
 
+    this.api.getEmployees().subscribe((data) => {
+      debugger;
+    });
+  }
 }

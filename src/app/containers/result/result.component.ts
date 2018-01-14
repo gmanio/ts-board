@@ -1,7 +1,15 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import * as Quill from 'Quill';
 import { DataService } from '../../services/data.service';
 import { ApiService } from '../../services/api.service';
+import { ActivatedRoute } from '@angular/router';
+import 'rxjs/add/operator/take';
+
+declare const Quill;
+
+interface Article {
+  title: string;
+  content: string;
+}
 
 @Component({
   selector: 'result',
@@ -11,27 +19,28 @@ import { ApiService } from '../../services/api.service';
 })
 
 export class ResultComponent implements OnInit {
-  private editor: Quill;
-  public data;
+  private editor;
+  private id: number;
+  public title: string;
 
   constructor(private dataService: DataService,
-              private api: ApiService) {
+              private api: ApiService,
+              private route: ActivatedRoute) {
+    this.route.params.take(1).subscribe(params => {
+      this.id = +params['id'];
+    });
   }
 
   ngOnInit() {
-    const options = {
-      modules: {
-        toolbar: false
-      },
+    this.editor = new Quill('#result', {
+      modules: { toolbar: false },
       readOnly: true,
       theme: 'snow'
-    }
+    });
 
-    this.editor = new Quill('#result', options);
-    this.editor.setContents(this.dataService.serviceData);
-
-    this.api.getEmployees().subscribe((data) => {
-      debugger;
+    this.api.getArticle(this.id).subscribe((article: Article) => {
+      this.title = article.title;
+      this.editor.setContents(JSON.parse(article.content));
     });
   }
 }

@@ -1,18 +1,23 @@
-import * as Quill from 'Quill';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { Router } from '@angular/router';
 import { DataService } from '../../services/data.service';
+import { ApiService } from '../../services/api.service';
+
+declare const Quill;
 
 @Component({
   selector: 'edit',
   templateUrl: './edit.component.html',
-  styleUrls: ['./edit.component.scss']
+  styleUrls: ['./edit.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 
 export class EditComponent implements OnInit {
-  private editor: Quill;
+  private editor;
+  public title: string;
 
   constructor(private router: Router,
+              private api: ApiService,
               private dataService: DataService) {
   }
 
@@ -37,20 +42,19 @@ export class EditComponent implements OnInit {
       // ['clean']                                         // remove formatting button
     ];
 
-    const options = {
-      // debug: 'info',
-      modules: {
-        toolbar: toolbarOptions
-      },
+    this.editor = new Quill('#editor', {
+      modules: { toolbar: toolbarOptions },
       placeholder: 'Compose an epic...',
-      // readOnly: true,
       theme: 'snow'
-    };
-    this.editor = new Quill('#editor', options);
+    });
   }
 
   onClickSave() {
-    this.dataService.serviceData = this.editor.getContents();
-    this.router.navigate(['/result']);
+    this.api.setArticle({
+      title: this.title,
+      content: this.editor.getContents()
+    }).subscribe((result) => {
+      this.router.navigate(['/result/' + result[0]]);
+    });
   }
 }

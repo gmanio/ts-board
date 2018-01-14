@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable()
 export class ApiService {
-  public host = 'http://localhost:2500';
+  public host = 'http://192.168.0.26:2500';
 
   constructor(private http: HttpClient) {
   }

@@ -1,7 +1,10 @@
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 
 @Injectable()
 export class DataService {
   public serviceData;
-  constructor() { }
+  public emitter: EventEmitter<any> = new EventEmitter();
+
+  constructor() {
+  }
 }

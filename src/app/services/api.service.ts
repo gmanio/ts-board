@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable()
 export class ApiService {
-  public host = 'http://192.168.0.26:2500';
+  public host = 'https://app.gman.io';
 
   constructor(private http: HttpClient) {
   }

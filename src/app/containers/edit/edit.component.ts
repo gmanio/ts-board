@@ -29,13 +29,20 @@ export class EditComponent implements OnInit {
         this.editable = true;
       }
     });
+
+    // this.dataService.emitter
+    //   // .skip(1)
+    //   .subscribe((result) => {
+    //   console.log(result);
+    // });
+
   }
 
   ngOnInit() {
     this.editor = new Quill('#editor', {
       modules: {
         toolbar: {
-          container: [['image']],
+          container: ['image', 'video'],
           handlers: {
             image: (...args) => {
               this.uploadImage(...args);

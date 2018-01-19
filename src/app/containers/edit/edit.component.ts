@@ -1,11 +1,13 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DataService } from '../../services/data.service';
 import { ApiService } from '../../services/api.service';
 import { FirebaseService } from '../../services/firebase.service';
 import { fromPromise } from 'rxjs/observable/fromPromise';
 
-declare const Quill;
+import * as quill from 'quill';
+
+const Quill = (quill as any).default ? (quill as any).default : quill;
 
 @Component({
   selector: 'edit',
@@ -14,7 +16,7 @@ declare const Quill;
   encapsulation: ViewEncapsulation.None
 })
 
-export class EditComponent implements OnInit {
+export class EditComponent implements OnInit, AfterViewInit {
   private editor;
   public title: string;
   private editable: boolean = false;
@@ -25,9 +27,9 @@ export class EditComponent implements OnInit {
               private dataService: DataService,
               private firebase: FirebaseService) {
     this.route.params.subscribe(params => {
-      if ( params['id'] ) {
-        this.editable = true;
-      }
+      // if ( params['id'] ) {
+      //   this.editable = true;
+      // }
     });
 
     // this.dataService.emitter
@@ -35,10 +37,11 @@ export class EditComponent implements OnInit {
     //   .subscribe((result) => {
     //   console.log(result);
     // });
-
   }
 
-  ngOnInit() {
+  ngOnInit() {}
+
+  ngAfterViewInit(): void {
     this.editor = new Quill('#editor', {
       modules: {
         toolbar: {

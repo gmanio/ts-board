@@ -4,7 +4,7 @@ import { environment } from '../../environments/environment';
 
 @Injectable()
 export class ApiService {
-  public host = 'https://app.gman.io';
+  public host: string;
 
   constructor(private http: HttpClient) {
     this.host = environment.apiUrl;

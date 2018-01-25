@@ -32,15 +32,18 @@ export class ResultComponent implements OnInit {
   }
 
   ngOnInit() {
+    // Initialize Quill
     this.editor = new Quill('#result', {
       modules: { toolbar: false },
       readOnly: true,
       theme: 'snow'
     });
 
-    this.api.getArticle(this.id).subscribe((article: Article) => {
-      this.title = article.title;
-      this.editor.setContents(JSON.parse(article.content));
-    });
+    this.api.getArticle(this.id)
+      .subscribe((article: Article) => {
+        debugger;
+        this.title = article.title;
+        this.editor.setContents(JSON.parse(article.content));
+      });
   }
 }

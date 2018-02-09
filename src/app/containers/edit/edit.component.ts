@@ -5,9 +5,7 @@ import { ApiService } from '../../services/api.service';
 import { FirebaseService } from '../../services/firebase.service';
 import { fromPromise } from 'rxjs/observable/fromPromise';
 
-import * as quill from 'quill';
-
-const Quill = (quill as any).default ? (quill as any).default : quill;
+declare const Quill;
 
 @Component({
   selector: 'edit',
@@ -31,15 +29,10 @@ export class EditComponent implements OnInit, AfterViewInit {
       //   this.editable = true;
       // }
     });
-
-    // this.dataService.emitter
-    //   // .skip(1)
-    //   .subscribe((result) => {
-    //   console.log(result);
-    // });
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+  }
 
   ngAfterViewInit(): void {
     this.editor = new Quill('#editor', {
@@ -48,7 +41,7 @@ export class EditComponent implements OnInit, AfterViewInit {
           container: ['image', 'video'],
           handlers: {
             image: (...args) => {
-              this.uploadImage(...args);
+              this.uploadImage();
             }
           }
         }

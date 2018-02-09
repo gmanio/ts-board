@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { environment } from '../../environments/environment';
+import { environment } from '../../environments/environment.dev';
 
 @Injectable()
 export class ApiService {
@@ -17,6 +17,11 @@ export class ApiService {
 
   getArticle(id: number) {
     const url = this.host + '/article/' + id;
+    return this.http.get(url);
+  }
+
+  getArticleList() {
+    const url = this.host + '/article';
     return this.http.get(url);
   }
 }

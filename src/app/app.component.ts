@@ -1,4 +1,5 @@
 import { Component, ViewEncapsulation } from '@angular/core';
+
 @Component({
   selector: 'root',
   templateUrl: './app.component.html',
@@ -7,5 +8,4 @@ import { Component, ViewEncapsulation } from '@angular/core';
 })
 
 export class AppComponent {
-  title = 'app';
 }

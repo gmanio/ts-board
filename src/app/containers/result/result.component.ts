@@ -41,7 +41,6 @@ export class ResultComponent implements OnInit {
 
     this.api.getArticle(this.id)
       .subscribe((article: Article) => {
-        debugger;
         this.title = article.title;
         this.editor.setContents(JSON.parse(article.content));
       });

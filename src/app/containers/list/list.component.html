@@ -1,0 +1,11 @@
+<ul>
+  <ng-container *ngFor="let article of (articleList$|async)">
+    <li>
+      <a (click)="onClickItem(article)">
+        <span>{{article.id}}</span>
+        <span>{{article.title}}</span>
+        <span>{{article.date|date:"MM/dd.hh:mm"}}</span>
+      </a>
+    </li>
+  </ng-container>
+</ul>

@@ -24,4 +24,9 @@ export class ApiService {
     const url = this.host + '/article';
     return this.http.get(url);
   }
+
+  getEmployeesByPage(start, size) {
+    const url = this.host + `/employees/page?start=${start}&size=${size}`;
+    return this.http.get(url);
+  }
 }

@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./list.component.scss']
 })
 export class ListComponent implements OnInit {
-  private articleList$: Observable<Object>;
+  public articleList$: Observable<Object>;
 
   constructor(private api: ApiService,
               private router: Router) {

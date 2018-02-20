@@ -4,6 +4,7 @@ import { DataService } from '../../services/data.service';
 import { ApiService } from '../../services/api.service';
 import { FirebaseService } from '../../services/firebase.service';
 import { fromPromise } from 'rxjs/observable/fromPromise';
+import { delay } from 'rxjs/operators';
 
 declare const Quill;
 
@@ -55,9 +56,11 @@ export class EditComponent implements OnInit, AfterViewInit {
     this.api.setArticle({
       title: this.title,
       content: this.editor.getContents()
-    }).subscribe((result) => {
-      this.router.navigate(['/result/' + result[0]]);
-    });
+    })
+      .pipe(delay(1000))
+      .subscribe((result) => {
+        this.router.navigate(['/result/' + result[0]]);
+      });
   }
 
   uploadImage() {
@@ -72,10 +75,12 @@ export class EditComponent implements OnInit, AfterViewInit {
 
       // file type is only image.
       if ( /^image\//.test(file.type) ) {
-        fromPromise(this.firebase.uploadImage(file)).subscribe(({ downloadURL }) => {
-          const range = this.editor.getSelection();
-          this.editor.insertEmbed(range.index, 'image', `${downloadURL}`);
-        });
+        fromPromise(this.firebase.uploadImage(file))
+          .subscribe(({ downloadURL }) => {
+            const range = this.editor.getSelection(true);
+            debugger;
+            this.editor.insertEmbed(range.index, 'image', `${downloadURL}`);
+          });
       } else {
         console.warn('You could only upload images.');
       }
